@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Lista de Productos</h1>
+
+<!-- Muestra los productos -->
+<ul>
+    {% for product in products %}
+    <li>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Precio: ${{ product.current_price }}</p>
+        <p>Tipo de molienda: {{ product.get_grinding_type_display }}</p>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto;">
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for product in products %}
+    <li>
+        <a href="{% url 'product_detail' slug=product.slug %}">
+            {{ product.name }}
+        </a> - ${{ product.current_price }}
+    </li>
+    {% endfor %}
+</ul>
+
+
+<!-- Controles de Paginación -->
+<div class="pagination">
+    {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}">Anterior</a>
+    {% endif %}
+
+    <span>Página {{ products.number }} de {{ products.paginator.num_pages }}</span>
+
+    {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}">Siguiente</a>
+    {% endif %}
+</div>
+
+
+{% endblock %}

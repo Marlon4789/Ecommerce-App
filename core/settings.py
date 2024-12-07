@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -117,6 +117,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Si tienes una carpeta de archivos estáticos en la raíz del proyecto:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+
+
+# Ruta en el servidor donde se almacenarán los archivos subidos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL pública para acceder a los archivos subidos
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
