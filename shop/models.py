@@ -8,7 +8,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['name']
-        indexes = [models.Index(fields=['name'])],
+        indexes = [models.Index(fields=['name'])]
 
         verbose_name = 'category' 
         verbose_name_plural = 'categories'
@@ -21,10 +21,17 @@ class Product(models.Model):
     name = models.CharField(max_length=300)
     slug = models.SlugField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    promotional_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    on_sale = models.BooleanField(default=False)
     weight = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    promotional_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    on_sale = models.BooleanField(default=False)
+
+    def current_price(self):
+        if self.on_sale and self.promotional_price:
+            return self.promotional_price
+        return self.price
+
+    
 
     GRINDING_TYPE_CHOICES = [
         ('fine', 'fine'),
@@ -39,7 +46,7 @@ class Product(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
   
-    Category = models.ForeignKey(Category, related_name='products', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ['name']
