@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from shop.models import Product, Category
+from cart.forms import CartAddProductForm
 
 class ProductListView(ListView):
     model = Product
@@ -21,5 +22,12 @@ class ProductDetailView(DetailView):
     def get_queryset(self):
         # Filtra solo productos disponibles
         return super().get_queryset().filter(availability=True)
+    
+
+    def get_context_data(self, **kwargs):
+        # Agrega el formulario al contexto
+        context = super().get_context_data(**kwargs)
+        context['cart_add_form'] = CartAddProductForm()
+        return context
 
 

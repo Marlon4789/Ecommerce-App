@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,6 +131,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # URL pública para acceder a los archivos subidos
 MEDIA_URL = '/media/'
+
+# SESIONES PARA CARRITO DE COMPRAS
+CART_SESSION_ID = 'cart'
 
 
 # Default primary key field type

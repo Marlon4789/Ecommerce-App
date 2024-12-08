@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
 <title>{% block title %}Detalles del producto{% endblock %}</title>
 
 <h1>Detalle del Producto</h1>
@@ -15,8 +14,15 @@
 <p>Stock disponible: {{ product.stock }}</p>
 <p>Disponible: {{ product.availability|yesno:"Sí,No" }}</p>
 
-<img src="{{ product.image.url }}" alt="{{ product.name }}"style="width: 150px; height: auto;">
+<img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto;">
 
-<a href="{% url 'product_list' %}">Volver a la lista de productos</a>
+<!-- Formulario para agregar al carrito -->
+<form action="{% url 'cart:cart_add' product.id %}" method="post">
+    {% csrf_token %}
+    {{ cart_add_form.quantity.label_tag }} {{ cart_add_form.quantity }}
+    {{ cart_add_form.override }}
+    <button type="submit">Agregar al carrito</button>
+</form>
 
+<a href="{% url 'shop:product_list' %}">Volver a la lista de productos</a>
 {% endblock %}

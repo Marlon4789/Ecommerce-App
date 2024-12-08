@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block content %}
+<h1>Carrito de Compras</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>${{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.total_price }}</td>
+            <td>
+                <form action="{% url 'cart:cart_remove' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Total: ${{ cart.get_total_price }}</p>
+<a href="{% url 'shop:product_list' %}">Continuar comprando</a>
+{% endblock %}
