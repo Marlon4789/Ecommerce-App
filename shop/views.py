@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView
 from shop.models import Product, Category
 from cart.forms import CartAddProductForm
 
+
+
+
 class ProductListView(ListView):
     model = Product
     template_name = 'products/product_list.html'
@@ -14,10 +17,11 @@ class ProductListView(ListView):
         return Product.objects.filter(availability=True).order_by('name')
     
     def get_context_data(self, **kwargs):
-        # Agrega el carrito al contexto
+        # Agrega el formulario al contexto
         context = super().get_context_data(**kwargs)
-        context['cart'] = self.request.session.get('cart', {})  # Obtén el carrito desde la sesión
+        context['cart_add_form'] = CartAddProductForm()
         return context
+    
 
 class ProductDetailView(DetailView):
     model = Product
