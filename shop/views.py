@@ -13,6 +13,11 @@ class ProductListView(ListView):
         # Mostrar solo productos disponibles
         return Product.objects.filter(availability=True).order_by('name')
     
+    def get_context_data(self, **kwargs):
+        # Agrega el carrito al contexto
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.request.session.get('cart', {})  # Obtén el carrito desde la sesión
+        return context
 
 class ProductDetailView(DetailView):
     model = Product
