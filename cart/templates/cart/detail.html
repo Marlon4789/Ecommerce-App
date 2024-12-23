@@ -47,4 +47,8 @@
 
 <p>Total: ${{ cart.get_total_price }}</p>
 <a href="{% url 'shop:product_list' %}">Continuar comprando</a>
+
+<a href="{% url 'orders:order_create' %}" class="button">Checkout</a>
+
+
 {% endblock %}

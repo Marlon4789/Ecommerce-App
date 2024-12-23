@@ -18,6 +18,7 @@ class Cart:
             self.cart[product_id] = {
                 'quantity': 0,
                 'price': str(product.current_price()),
+                'name': product.name  # Guardamos el nombre del producto
             }
         if override:
             self.cart[product_id]['quantity'] = quantity
@@ -25,26 +26,29 @@ class Cart:
             self.cart[product_id]['quantity'] += quantity
         self.save()
 
-    def remove(self, product):
-        """Elimina un producto del carrito."""
-        product_id = str(product.id)
-        if product_id in self.cart:
-            del self.cart[product_id]
-        self.save()
-
     def save(self):
         """Guarda el carrito en la sesión."""
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
+    def remove(self, product):
+        """Elimina un producto del carrito."""
+        product_id = str(product.id)
+        if product_id in self.cart:
+            del self.cart[product_id]
+            self.save()
+
     def __iter__(self):
         """Itera sobre los productos del carrito."""
         product_ids = self.cart.keys()
+        # Obtener los objetos producto y añadirlos al carrito
         products = Product.objects.filter(id__in=product_ids)
-        for product in products:
-            self.cart[str(product.id)]['product'] = product
+        cart = self.cart.copy()
 
-        for item in self.cart.values():
+        for product in products:
+            cart[str(product.id)]['product'] = product
+
+        for item in cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
@@ -55,11 +59,10 @@ class Cart:
 
     def get_total_price(self):
         """Calcula el precio total de los productos en el carrito."""
-        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+        return sum(Decimal(item['price']) * item['quantity'] 
+                  for item in self.cart.values())
 
     def clear(self):
         """Limpia el carrito."""
         del self.session[settings.CART_SESSION_ID]
-        self.save()
-
-        
+        self.session.modified = True

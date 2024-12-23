@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Crear pedido{% endblock %}
+
+{% block content %}
+
+<h1>Crear Pedido</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Realizar Pedido</button>
+  </form>
+
+{% endblock %}

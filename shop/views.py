@@ -4,8 +4,6 @@ from shop.models import Product, Category
 from cart.forms import CartAddProductForm
 
 
-
-
 class ProductListView(ListView):
     model = Product
     template_name = 'products/product_list.html'

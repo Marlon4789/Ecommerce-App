@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 
 class Category(models.Model):
     name = models.CharField(max_length=300, unique=True)
@@ -28,8 +29,9 @@ class Product(models.Model):
 
     def current_price(self):
         if self.on_sale and self.promotional_price:
-            return self.promotional_price
-        return self.price
+            return str(self.promotional_price)
+        return str(self.price)
+    
 
     
 
