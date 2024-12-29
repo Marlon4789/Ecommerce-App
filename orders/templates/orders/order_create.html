@@ -5,6 +5,12 @@
 {% block content %}
 
 <h1>Crear Pedido</h1>
+
+  <li class="list-group-item d-flex justify-content-between">
+    <span>Total</span>
+    <strong>${{ cart.get_total_price }}</strong>
+  </li>
+  
   <form method="post" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
