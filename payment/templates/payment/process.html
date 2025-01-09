@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Payment Process{% endblock %}
+
+{% block content %}
+<h1>Payment Process</h1>
+<p>Your order total is: {{ order.get_total_cost }} USD</p>
+
+<form method="post" action="{% url 'payment:process' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+</form>
+{% endblock %}
