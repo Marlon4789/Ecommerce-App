@@ -12,6 +12,7 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         # Mostrar solo productos disponibles
+        #return Product.objects.order_by('name')  # Mostrar todos los productos
         return Product.objects.filter(availability=True).order_by('name')
     
     def get_context_data(self, **kwargs):
