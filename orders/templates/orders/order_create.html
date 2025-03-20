@@ -1,20 +1,53 @@
 {% extends "layouts/base.html" %}
-
-{% block title %}Crear pedido{% endblock %}
-
+{% block title %}Crear Pedido{% endblock %}
+{% load humanize %}
 {% block content %}
+<div class="container mt-5 py-5">
+  <div class="shadow-sm">
+    <div class="card-header bg-success">
+      <h1 class="h4 mb-0">Crear Pedido</h1>
+    </div>
 
-<h1>Crear Pedido</h1>
-
-  <li class="list-group-item d-flex justify-content-between">
-    <span>Total</span>
-    <strong>${{ cart.get_total_price }}</strong>
-  </li>
-  
-  <form method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Realizar Pedido</button>
-  </form>
-
+    <div>
+      <ul class="list-group mb-4">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span><strong>Total</strong></span>
+          <strong>${{ cart.get_total_price|floatformat:"0"|intcomma|cut:"," }}</strong>
+        </li>
+      </ul>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            
+            {{ form.full_name }}
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            
+            {{ form.email }}
+          </div>
+          <div class="form-group col-md-6">
+            
+            {{ form.address }}
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            
+            {{ form.postal_code }}
+          </div>
+          <div class="form-group col-md-6">
+            
+            {{ form.city }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-warning btn-block rounded-0 shadow-sm"><strong>Realizar Pedido</strong></button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
+

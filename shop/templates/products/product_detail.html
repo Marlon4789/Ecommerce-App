@@ -1,34 +1,54 @@
 {% extends "layouts/base.html" %}
-{% load static %}
+{% block title %}Detalles del Producto{% endblock %}
+
 
 {% block content %}
-<title>{% block title %}Detalles del producto{% endblock %}</title>
-
-<h1>Detalle del Producto</h1>
-
-<h1>{{ product.name }}</h1>
-<p>Precio: ${{ product.current_price }}</p>
-<p>Descripción: {{ product.description }}</p>
-<p>Peso: {{ product.weight }} g</p>
-<p>Tipo de molienda: {{ product.get_grinding_type_display }}</p>
-<p>Stock disponible: {{ product.stock }}</p>
-<!-- <p>Disponible: {{ product.availability|yesno:"Sí,No" }}</p> -->
-
-<img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 150px; height: auto;">
-
-<!-- Verifica si hay stock disponible -->
-{% if product.stock > 0 %}
-    <!-- Formulario para agregar al carrito solo si hay stock -->
-    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+{% load humanize %}
+<div class="container mt-4 pt-2 pt-md-5">
+  <div class="row mt-4 pt-2">
+    <!-- Imagen del Producto -->
+    <div class="col-12 col-md-6 mb-4 mb-md-0 d-flex justify-content-center justify-content-md-end">
+      {% if product.image %}
+      <img style="max-height: 20rem;max-width: 20rem; object-fit: cover;" src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm">
+      {% endif %}
+    </div>
+    <!-- Detalles del Producto -->
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+      <h3 class="h4">{{ product.name }}</h3>
+      <p class="lead">Precio: ${{ product.current_price|floatformat:"0" | intcomma }}</p>
+      <ul class="list-unstyled">
+        <li><strong>Peso:</strong> {{ product.weight }} g</li>
+        <li><strong>Tipo de molienda:</strong> {{ product.get_grinding_type_display }}</li>
+        <li><strong>Stock disponible:</strong> {{ product.stock }}</li>
+      </ul>
+      {% if product.stock > 0 %}
+      <form action="{% url 'cart:cart_add' product.id %}" method="post" class="mb-3">
         {% csrf_token %}
-        {{ cart_add_form.quantity.label_tag }} {{ cart_add_form.quantity }}
+        <div class="form-group">
+          {{ cart_add_form.quantity.label_tag }}
+          {{ cart_add_form.quantity }}
+        </div>
         {{ cart_add_form.override }}
-        <button type="submit">Agregar al carrito</button>
-    </form>
-{% else %}
-    <!-- Mensaje cuando no hay stock disponible -->
-    <p>Lo sentimos, este producto está agotado.</p>
-{% endif %}
-
-<a href="{% url 'shop:product_list' %}">Volver a la lista de productos</a>
+        <div class="d-block">
+          <button type="submit fixed-top" class="btn btn-warning rounded-0">Agregar al carrito</button>
+          <a href="{% url 'shop:product_list' %}" class="btn btn-outline-secondary rounded-0">Regresar</a>
+        </div>
+      </form>
+      {% else %}
+      <p class="text-danger font-weight-bold">Lo sentimos, este producto está agotado.</p>
+      {% endif %}
+      
+    </div>
+  </div>
+  
+  <!-- Sección de Descripción (Estilo Mercado Libre) -->
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-12 col-md-5 offset-md-6">
+            <h5>Descripción del Producto</h5>
+            <p>{{ product.description|linebreaks }}</p>
+      </div>
+    </div>
+    </div>
+</div>
 {% endblock %}

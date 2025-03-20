@@ -8,7 +8,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'products/product_list.html'
     context_object_name = 'products'
-    paginate_by = 10
+    paginate_by = 4
 
     def get_queryset(self):
         # Mostrar solo productos disponibles

@@ -1,20 +1,12 @@
 {% extends "layouts/base.html" %}
-
-{% load static %}
-
-{% block title %}
-    Order Placed Successfully
-{% endblock %}
-
+{% block title %}Pedido Realizado{% endblock %}
 {% block content %}
-    <div class="container">
-        <h1 class="text-success mb-4">Thank you!</h1>
-        <p class="lead">Su pedido se ha realizado correctamente. Su número de pedido es <strong>{{ order.id }}</strong>.</p>
-        <p>Le enviaremos un correo electrónico con los detalles del pedido y la información de seguimiento una vez que se envíe su pedido.
-
-        </p>
-        <div class="mt-4">
-            <a href="{% url 'shop:product_list' %}" class="btn btn-primary">Continuar comprando</a>
-        </div>
+<div class="container">
+    <h1 class="text-success mb-4">¡Gracias!</h1>
+    <p class="lead">Su pedido se ha realizado correctamente. Su número de pedido es <strong>{{ order.id }}</strong>.</p>
+    <p>Le enviaremos un correo electrónico con los detalles y la información de seguimiento una vez que se envíe su pedido.</p>
+    <div class="mt-4">
+        <a href="{% url 'shop:product_list' %}" class="btn btn-primary">Continuar Comprando</a>
     </div>
+</div>
 {% endblock %}
