@@ -2,12 +2,12 @@
 {% block title %}Carrito de Compras{% endblock %}
 {% load humanize %}
 {% block content %}
-<div class="container mt-5 py-5 pb-5">
+<div class="container mt-5 py-5 pb-5" style="height: 27rem;">
   <h3 class="mb-4">Carrito de Compras</h3>
   <div class="row">
     {% for item in cart %}
     <div class="col-12 col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 shadow-sm border border-secondary rounded-1">
+      <div class="card h-100 shadow-sm border border-secondary rounded-0">
         <div class="card-body">
           <h5 class="card-title">{{ item.product.name }}</h5>
           <p class="card-text mb-1"><strong>Precio:</strong> ${{ item.price|floatformat:"0"|intcomma|cut:"," }}</p>
@@ -19,12 +19,12 @@
                 {{ item.update_quantity_form.quantity }}
               </div>
               <input type="hidden" name="override" value="True">
-              <button type="submit" class="btn btn-sm btn-secondary">Actualizar</button>
+              <button type="submit" class="btn btn-sm btn-secondary rounded-0">Actualizar</button>
             </form>
           </div>
           <form action="{% url 'cart:cart_remove' item.product.id %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+            <button type="submit" class="btn btn-sm btn-danger rounded-0">Eliminar</button>
           </form>
         </div>
       </div>

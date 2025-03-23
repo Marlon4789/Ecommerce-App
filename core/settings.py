@@ -13,6 +13,7 @@ import os
 import stripe
 from pathlib import Path
 from decouple import config
+import smtplib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -156,6 +157,22 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+smtp_server = 'smtp.gmail.com'
+port = 587
+sender_email = config('EMAIL_HOST_USER')
+password = config('EMAIL_HOST_PASSWORD')
+
+try:
+    server = smtplib.SMTP(smtp_server, port)
+    server.ehlo()
+    server.starttls()
+    server.login(sender_email, password)
+    print("Conexión exitosa")
+except Exception as e:
+    print("Error al conectar:", e)
+finally:
+    server.quit()
 
 ## Stripe
 STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')

@@ -16,7 +16,7 @@
 <body style="background-color: rgb(255, 255, 255); font-style: oblique;">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:rgb(14, 14, 14)">
-    <a class="navbar-brand text-danger" href="{% url 'shop:product_list' %}"><strong>Kaboha</strong></a>
+    <a class="navbar-brand text-danger" href="{% url 'shop:product_list' %}"><strong>Coffee Shop</strong></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,7 +34,11 @@
     </div> -->
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto text-danger">
+        <div class="col d-md-flex align-ifems-center">
+          <li class="mx-md-2">Inicio</li>
+          <li>Blog</li>
+        </div>
         <li class="nav-item position-md-relative">
           <a class="nav-link d-flex align-items-start text-danger" href="{% url 'cart:cart_detail' %}">
             <i class="fas fa-shopping-cart position-relative"></i>
@@ -48,6 +52,7 @@
             {% endwith %}
           </a>
         </li>
+        
       </ul>
     </div>
 
@@ -64,17 +69,17 @@
       <div class="row">
         <!-- Información de la Tienda -->
         <div class="col-md-4 mb-3 mb-md-0">
-          <h5 class="text-danger">Kaboha</h5>
+          <h5 class="text-danger">Coffee Shop</h5>
           <p class="small">
             Tienda online de cafés especiales. Calidad, tradición y sabor en cada taza.
-            © 2025 Kaboha. Todos los derechos reservados.
+            © 2025 Coffee Shop. Todos los derechos reservados.
           </p>
         </div>
         <!-- Datos de Contacto -->
         <div class="col-md-4 mb-3 mb-md-0">
           <h5>Contacto</h5>
           <ul class="list-unstyled small">
-            <li><i class="fas fa-envelope mr-2"></i>info@kaboha.com</li>
+            <li><i class="fas fa-envelope mr-2"></i>info@Coffeeshop.com</li>
             <li><i class="fas fa-phone mr-2"></i>+1 234 567 890</li>
             <li><i class="fas fa-map-marker-alt mr-2"></i>Calle Falsa 123, Ciudad, País</li>
           </ul>
